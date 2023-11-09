@@ -1,0 +1,5 @@
+.vscode
+__pycache__
+epoch[0-2][0-3].pth
+epoch[0-9].pth
+epoch1[0-9].pth

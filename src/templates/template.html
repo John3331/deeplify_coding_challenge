@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pneumonia Detection</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Pneumonia Detection</h1>
+    
+    <form id="upload-form" enctype="multipart/form-data" method="post">
+        <input name="files" id="file-input" type="file" multiple>
+        <input type="submit" value="Upload and Detect">
+    </form>
+
+    <h2>Results</h2>
+    <p id="classification"></p>
+    <p id="confidence"></p>
+    <img id="result-image" src="" width="400">
+
+    <script>
+        $(document).ready(function () {
+            $('#upload-form').on('submit', function (e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    type: 'POST',
+                    url: '/files/',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        // Update the HTML content with the result data
+                        $('#classification').text('Classification: ' + data.Classification);
+                        $('#confidence').text('Confidence: ' + data.confidence);
+                        $('#result-image').attr('src', 'data:image/jpeg;base64, ' + data.image);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
